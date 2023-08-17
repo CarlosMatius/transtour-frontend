@@ -11,9 +11,7 @@ import { MuellesComponent } from './muelles/muelles.component';
 import { PagosComponent } from './pagos/pagos.component';
 import { PasajerosComponent } from './pasajeros/pasajeros.component';
 import { ReservasComponent } from './reservas/reservas.component';
-import { ResponsablesComponent } from './responsables/responsables.component';
 import { RolesComponent } from './roles/roles.component';
-import { DocumentosComponent } from './documentos/documentos.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { UsuariosRolesComponent } from './usuarios-roles/usuarios-roles.component';
 import { ResponsablesReservasComponent } from './responsables-reservas/responsables-reservas.component';
@@ -31,9 +29,7 @@ import { TiposIdentificacionesComponent } from './tipos-identificaciones/tipos-i
     PagosComponent,
     PasajerosComponent,
     ReservasComponent,
-    ResponsablesComponent,
     RolesComponent,
-    DocumentosComponent,
     UsuariosComponent,
     UsuariosRolesComponent,
     ResponsablesReservasComponent,
