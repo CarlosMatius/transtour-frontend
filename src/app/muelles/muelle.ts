@@ -1,4 +1,4 @@
 export class Muelle {
-    id?: number;
-    nombre?: string;
+    id!: number;
+    nombre!: string;
 }

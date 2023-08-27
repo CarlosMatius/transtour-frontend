@@ -1,0 +1,120 @@
+<ul class="alert alert-danger" *ngIf="errores && errores.length > 0">
+    <li class="ms-3" *ngFor="let err of errores">{{ err }}</li>
+</ul>
+<div class="container">
+    <div class="card text-bg-secondary mt-3" style="max-width: 30rem;">
+        <div class="card-header">{{ titulo }}</div>
+        <div class="card-body">
+    
+            <form #empresaForm="ngForm">
+    
+                <div class="form-group">
+                    <label for="nombre" class="col-form-label col-sm-2">Nombre</label>
+                    <div class="col-sm-15">
+                        <input 
+                            type="text" class="form-control" autocomplete="off" name="nombre" 
+                            placeholder="Ingrese el nombre de la empresa" [(ngModel)]="empresa.nombre" 
+                            #nombre="ngModel"
+                        >
+                        <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+                            <div *ngIf="nombre.errors?.['required']">
+                                nombre es requerido
+                            </div>
+                            <div *ngIf="nombre.errors?.['minlength']">
+                                nombre debe ser mayor a 5 caracteres
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="nit" class="col-form-label col-sm-2">Nit</label>
+                    <div class="col-sm-15">
+                        <input 
+                            type="text" class="form-control" autocomplete="off" name="nit" 
+                            placeholder="Ingrese el nit de la empresa" [(ngModel)]="empresa.nit" 
+                            #nit="ngModel"
+                        >
+                        <div class="alert alert-danger" *ngIf="nit.invalid && (nit.dirty || nit.touched)">
+                            <div *ngIf="nit.errors?.['required']">
+                                nit es requerido
+                            </div>
+                            <div *ngIf="nit.errors?.['minlength']">
+                                nit debe ser mayor a 9 caracteres
+                            </div>
+                            <div *ngIf="nit.errors?.['pattern']">
+                                farmato no valido para el nit
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="form-group">
+                    <label for="email" class="col-form-label col-sm-2">Email</label>
+                    <div class="col-sm-15">
+                        <input 
+                            type="email" class="form-control" name="email" 
+                            placeholder="Ingrese el email de la empresa" [(ngModel)]="empresa.email" 
+                            #email="ngModel"
+                        >
+                        <div class="alert alert-danger" *ngIf="email.invalid && (email.dirty || email.touched)">
+                            <div *ngIf="email.errors?.['required']">
+                                email es requerido
+                            </div>
+                            <div *ngIf="email.errors?.['email']">
+                                email debe tener un formato valido
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="form-group">
+                    <label for="telefono" class="col-form-label col-sm-2">Telefono</label>
+                    <div class="col-sm-15">
+                        <input 
+                            type="number" class="form-control" autocomplete="off" name="telefono" 
+                            placeholder="Ingrese el telefono de la empresa" [(ngModel)]="empresa.telefono" 
+                            #telefono="ngModel"
+                        >
+                        <div class="alert alert-danger" *ngIf="telefono.invalid && (telefono.dirty || telefono.touched)">
+                            <div *ngIf="telefono.errors?.['required']">
+                                telefono es requerido
+                            </div>
+                            <div *ngIf="telefono.errors?.['minlength']">
+                                telefono debe ser mayor a 7 caracteres
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="form-group">
+                    <label class="col-form-label col-sm-2">Estado</label>
+                    <div class="col-sm-15">
+                        <select class="form-select" aria-label="Default select example" name="titulos" [(ngModel)]="empresa.enabled">
+                            <option value=true>Activa</option>
+                            <option value=false>Inactiva</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <div class="d-grid gap-2 col-6 mx-auto">
+                        <button 
+                            class="btn btn-success mt-3" 
+                            role="button" (click)="create()" *ngIf="!empresa.id else elseBlock" [disabled]="!empresaForm.valid">
+                                Registrar
+                        </button>
+                        <ng-template #elseBlock>
+                            <button 
+                                class="btn btn-success mt-3" role="button" (click)="update()" [disabled]="!empresaForm.valid">
+                                    Actualizar
+                            </button>
+                        </ng-template>
+                        
+                    </div>
+                </div>
+            </form>
+            
+        </div>
+    </div>
+</div>

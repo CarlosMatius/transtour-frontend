@@ -1,1 +1,56 @@
-<p>empresas works!</p>
+<div class="container">
+  <div class="card border-danger">
+    <div class="card-header">Empresas</div>
+    <div class="card-body text-primary">
+      <h5 class="card-title">Listado de empresas</h5>
+
+      <div class="my-2 text-left">
+        <button class="btn btn rounded btn-primary" type="button" [routerLink]="['/empresas/form']">Nueva Empresa</button>
+      </div>
+      <div *ngIf="empresas?.length===0" class="alert alert-info">
+        No hay empresas registradas
+      </div>
+      <table class="table table-bordered table-striped table-hover text-center" *ngIf="empresas != null && empresas.length > 0">
+        <thead>
+            <tr>
+              <th>Id</th>
+              <th>Nombre</th>
+              <th>Nit</th>
+              <th>Email</th>
+              <th>Telefono</th>
+              <th>Estado</th>
+              <th></th>
+              <th></th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let empresa of empresas">
+            <td>{{empresa.id}}</td>
+            <td>{{empresa.nombre | uppercase}}</td>
+            <td>{{empresa.nit}}</td>
+            <td>{{empresa.email}}</td>
+            <td>{{empresa.telefono}}</td>
+            <td>{{empresa.enabled ? 'Activa' : 'Inactiva'}}</td>
+            <td>
+              <button 
+                type="button" 
+                name="editar" 
+                [routerLink]="['/empresas/form', empresa.id]"
+                class="btn btn-warning btn-sm">Editar
+              </button>
+            </td>
+            <td>
+              <button 
+                type="button" 
+                name="eliminar" 
+                (click)="delete(empresa)"
+                class="btn btn-danger btn-sm">Eliminar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <paginator-nav *ngIf="paginador" [paginador]="paginador"></paginator-nav>
+    </div>
+</div>
+</div>
