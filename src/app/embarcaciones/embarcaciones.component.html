@@ -1,1 +1,49 @@
-<p>embarcaciones works!</p>
+<div class="container">
+    <div class="card border-danger">
+      <div class="card-header">{{titulo}}</div>
+      <div class="card-body text-dark">
+        <h5 class="card-title fs-4 text-center">Listado de Embarcaciones</h5>
+  
+        <div class="my-2 text-left">
+          <button class="btn btn rounded btn-primary" type="button" [routerLink]="['/embarcaciones/form']">Nueva Embarcacion</button>
+        </div>
+        <div *ngIf="embarcaciones?.length===0" class="alert alert-info">
+          No hay embarcaciones registradas
+        </div>
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped table-hover text-center" *ngIf="embarcaciones != null && embarcaciones.length > 0">
+            <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Capacidad</th>
+                  <th>Estado</th>
+                  <th>Empresa</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let embarcacion of embarcaciones">
+                <td>{{embarcacion.nombre | uppercase}}</td>
+                <td>{{embarcacion.capacidad}}</td>
+                <td>{{embarcacion.enabled ? 'Activa' : 'Inactiva'}}</td>
+                <td>{{embarcacion.empresa.nombre | uppercase}}</td>
+                <td>
+                  <button type="button" name="editar" [routerLink]="['/embarcaciones/form', embarcacion.id]"
+                  class="btn btn-primary btn-sm">
+                    Editar
+                  </button>
+                </td>
+                <td class="align-middle">
+                  <button  type="button" name="eliminar" (click)="delete(embarcacion)" class="btn btn-danger btn-sm">
+                        Eliminar
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <paginator-nav *ngIf="paginador && paginador.totalPages > 1" [paginador]="paginador" [enlacePaginador]="enlacePaginador" [sizePagina]="sizePagina"></paginator-nav>
+      </div>
+    </div>
+  </div>

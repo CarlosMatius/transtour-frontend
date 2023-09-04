@@ -1,1 +1,68 @@
-<p>usuarios works!</p>
+<div class="container">
+    <div class="card border-danger">
+      <div class="card-header">{{titulo}}</div>
+      <div class="card-body text-dark">
+        <h5 class="card-title fs-4 text-center">Listado de Usuario</h5>
+  
+        <div class="my-2 text-left">
+          <button class="btn btn rounded btn-primary" type="button" [routerLink]="['/usuarios/form']">Nuevo Usuario</button>
+        </div>
+        <div *ngIf="usuarios?.length===0" class="alert alert-info">
+          No hay usuarios registrados
+        </div>
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped table-hover text-center" *ngIf="usuarios != null && usuarios.length > 0">
+            <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Apellido</th>
+                  <th>Tipo Documento</th>
+                  <th>Identificacion</th>
+                  <th>Usuario</th>
+                  <th>Estado</th>
+                  <th>Empresa</th>
+                  <th>Roles</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let usuario of usuarios">
+                <td class="align-middle">{{usuario.nombre | uppercase}}</td>
+                <td class="align-middle">{{usuario.apellido | uppercase}}</td>
+                <td class="align-middle">{{usuario.tipoIdentificacion.nombre}}</td>
+                <td class="align-middle">{{usuario.identificacion}}</td>
+                <td class="align-middle">{{usuario.username}}</td>
+                <td class="align-middle">{{usuario.enabled ? 'Activo' : 'Inactivo'}}</td>
+                <td class="align-middle">{{usuario.empresa ? usuario.empresa.nombre.toUpperCase() : 'N/A'}}</td>
+                <td class="align-middle">
+                  <ul style="list-style: none; padding: 0; text-align: left;">
+                    <li *ngFor="let rol of usuario.roles">
+                      {{ rol.nombre === 'ROLE_SUPERADMINISTRADOR' ? 'SUPERADMINISTRADOR' : 
+                      (rol.nombre === 'ROLE_ADMINISTRADOR' ? 'ADMINISTRADOR' : 'ASESOR') }}</li>
+                  </ul>
+                </td>
+                <td class="align-middle">
+                  <button 
+                    type="button" 
+                    name="editar"
+                    [routerLink]="['/usuarios/form', usuario.id]"
+                    class="btn btn-primary btn-sm">Editar
+                  </button>
+                </td>
+                <td class="align-middle">
+                  <button 
+                    type="button" 
+                    name="eliminar" 
+                    (click)="delete(usuario)"
+                    class="btn btn-danger btn-sm">Eliminar
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <paginator-nav *ngIf="paginador && paginador.totalPages > 1" [paginador]="paginador" [enlacePaginador]="enlacePaginador" [sizePagina]="sizePagina"></paginator-nav>
+      </div>
+    </div>
+  </div>

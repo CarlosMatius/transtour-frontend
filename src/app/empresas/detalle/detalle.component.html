@@ -1,0 +1,43 @@
+<div class="abrir-modal animacion fadeIn" *ngIf="modalService.modal">
+    <div class="modal" tabindex="-1" style="display: block;">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title fs-5 text-center">{{titulo}}</h5>
+              <button (click)="cerrarModal()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <ul *ngIf="empresa" class="list-group text-dark mb-2">
+                                <li class="list-group-item active">{{empresa.nombre}}</li>
+                                <li class="list-group-item">{{empresa.nit}}</li>
+                                <li class="list-group-item">{{empresa.email}}</li>
+                                <li class="list-group-item">{{empresa.telefono}}</li>
+                                <li class="list-group-item">{{empresa.enabled ? 'Activa' : 'Inactiva'}}</li>
+                            </ul>
+        
+                            <div class="input-group mb-2">
+                                <input (change)="seleccionarFoto($event)" type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                                <button (click)="subirFoto()" [disabled]="!fotoSeleccionada" class="btn btn-success" type="button" id="inputGroupFileAddon04">Subir</button>
+                            </div>
+                            <div *ngIf="progreso > 0" class="progress" role="progressbar" aria-label="Default striped example" attr.aria-valuenow="{{progreso}}" aria-valuemin="0" aria-valuemax="100">
+                                <div class="progress-bar progress-bar-striped" [ngStyle]="{width: progreso+'%'}">{{progreso}}%</div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <img *ngIf="empresa?.imagen" 
+                                src="http://localhost:8080/v1/empresas/uploads/img/{{empresa.imagen}}" 
+                                alt="imagen de la empresa" class="img-thumbnail rounded">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button (click)="cerrarModal()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>

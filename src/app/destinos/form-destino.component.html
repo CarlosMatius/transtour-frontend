@@ -1,0 +1,65 @@
+<ul class="alert alert-danger" *ngIf="errores && errores.length > 0">
+    <li class="ms-3" *ngFor="let err of errores">{{ err }}</li>
+</ul>
+<div class="container">
+    <div class="card border-primary mt-3" style="max-width: 30rem;">
+        <div *ngIf="!destino.id else elsBlock" class="card-header border-primary"><strong>Registrar Destino</strong></div>
+
+        <ng-template #elsBlock>
+            <div class="card-header border-primary"><strong>Editar Destino</strong></div>
+        </ng-template>
+        
+        <div class="card-body">
+    
+            <form #destinoForm="ngForm">
+    
+                <div class="form-group">
+                    <label for="nombre" class="col-form-label col-sm-2">Nombre</label>
+                    <div class="col-sm-15">
+                        <input 
+                            type="text" class="form-control border-primary" autocomplete="off" name="nombre" 
+                            placeholder="Ingrese el nombre del destino" [(ngModel)]="destino.nombre" 
+                            required
+                        >   
+                    </div>
+                </div>
+    
+                <div class="form-group">
+                    <label class="col-form-label col-sm-2">Estado</label>
+                    <div class="col-sm-15">
+                        <select class="form-select border-primary" aria-label="Default select example" name="enabled" [(ngModel)]="destino.enabled" required>
+                            <option [ngValue]="undefined">Seleccionar estado</option>
+                            <option value=true>Activo</option>
+                            <option value=false>Inactivo</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <div class="row row-cols-2">
+                        <div class="col">
+                            <button 
+                                class="btn btn-primary mt-3 w-100" role="button" (click)="create()" 
+                                *ngIf="!destino.id else elseBlock" [disabled]="!destinoForm.valid">
+                                Registrar
+                            </button>
+
+                            <ng-template #elseBlock>
+                                <button 
+                                    class="btn btn-primary mt-3 w-100" role="button" (click)="update()" [disabled]="!destinoForm.valid">
+                                    Actualizar
+                                </button>
+                            </ng-template>
+                        </div>
+
+                        <div class="col">
+                            <button type="button" class="btn btn-danger mt-3 w-100" routerLink="/destinos">
+                                Cancelar 
+                            </button>
+                        </div>
+                    </div>        
+                </div>
+            </form>          
+        </div>
+    </div>
+</div>

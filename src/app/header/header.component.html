@@ -1,44 +1,76 @@
 <nav class="navbar navbar-expand-lg border-bottom border-body bg-primary navbar-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" routerLink="/">{{ titulo }}</a>
-      <button 
-        class="navbar-toggler" 
-        type="button" 
-        data-bs-toggle="collapse" 
-        data-bs-target="#navbarSupportedContent" 
-        aria-controls="navbarSupportedContent" 
-        aria-expanded="false" 
-        aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/usuarios" routerLinkActive="active">Usuarios</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/empresas" routerLinkActive="active">Empresas</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/embarcaciones" routerLinkActive="active">Embarcaciones</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/destinos" routerLinkActive="active">Destinos</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/itinerarios" routerLinkActive="active">Itinerarios</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/reservas" routerLinkActive="active">Reservas</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link"routerLink="/pagos" routerLinkActive="active">Pagos</a>
-          </li>
-        </ul>
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-secondary" type="submit">Search</button>
-        </form>
-      </div>
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="/perfil">{{ titulo }}</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li *ngIf="authService.hasRole('ROLE_SUPERADMINISTRADOR') || authService.hasRole('ROLE_ADMINISTRADOR')" class="nav-item">
+          <a class="nav-link" routerLink="/usuarios" routerLinkActive="active">Usuarios</a>
+        </li>
+        <li *ngIf="authService.hasRole('ROLE_SUPERADMINISTRADOR')" class="nav-item">
+          <a class="nav-link" routerLink="/empresas" routerLinkActive="active">Empresas</a>
+        </li>
+        <li *ngIf="authService.hasRole('ROLE_SUPERADMINISTRADOR') || authService.hasRole('ROLE_ADMINISTRADOR')" class="nav-item">
+          <a class="nav-link" routerLink="/embarcaciones" routerLinkActive="active">Embarcaciones</a>
+        </li>
+        <li *ngIf="authService.hasRole('ROLE_SUPERADMINISTRADOR')" class="nav-item">
+          <a class="nav-link" routerLink="/destinos" routerLinkActive="active">Destinos</a>
+        </li>
+        <li *ngIf="authService.hasRole('ROLE_SUPERADMINISTRADOR') || authService.hasRole('ROLE_ADMINISTRADOR')" class="nav-item">
+          <a class="nav-link" routerLink="/itinerarios" routerLinkActive="active">Itinerarios</a>
+        </li>
+        <li *ngIf="
+          authService.hasRole('ROLE_SUPERADMINISTRADOR') || 
+          authService.hasRole('ROLE_ADMINISTRADOR') || 
+          authService.hasRole('ROLE_ASESOR')" class="nav-item">
+          <a class="nav-link" routerLink="/reservas" routerLinkActive="active">Reservas</a>
+        </li>
+        <li *ngIf="authService.hasRole('ROLE_SUPERADMINISTRADOR') || authService.hasRole('ROLE_ADMINISTRADOR')" class="nav-item">
+          <a class="nav-link" routerLink="/pagos" routerLinkActive="active">Pagos</a>
+        </li>
+        <li *ngIf="authService.hasRole('ROLE_SUPERADMINISTRADOR') || authService.hasRole('ROLE_ADMINISTRADOR')" class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Reportes
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item" href="#">Destinos mas Vsitados</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#">Reservas</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#">Pagos</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="navbar-nav navbar-right">
+        <li *ngIf="!authService.isAuthenticated()" class="btn-group">
+          <a class="btn btn-danger dropdown-toggle" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Login
+          </a>
+
+          <ul class="dropdown-menu dropdown-menu-lg-end border-primary mt-3" style="width:17rem;">
+            <app-login></app-login>
+          </ul>
+        </li>
+        
+        <li *ngIf="authService.isAuthenticated()" class="btn-group">
+          <a class="btn btn-danger dropdown-toggle" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            {{authService.usuario.username}}
+          </a>
+
+          <ul class="dropdown-menu dropdown-menu-lg-end mt-1" >
+            <button (click)="logout()" class="dropdown-item" type="submit">Sign Out</button>
+          </ul>
+        </li>
+      </ul>
     </div>
-  </nav>
+  </div>
+</nav>

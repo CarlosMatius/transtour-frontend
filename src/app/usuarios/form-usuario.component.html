@@ -1,0 +1,85 @@
+<ul class="alert alert-danger" *ngIf="errores && errores.length > 0">
+    <li class="ms-3" *ngFor="let err of errores">{{ err }}</li>
+</ul>
+
+<div class="container">
+    <div class="card border-primary" style="max-width: 30rem;">
+        <div *ngIf="!usuarioId else elseBlocked" class="card-header border-primary">Registrar Usuario</div>
+        <ng-template #elseBlocked>
+            <div class="card-header border-primary">Editar Usuario</div>
+        </ng-template>
+        <div class="card-body">
+            <form [formGroup]="usuarioForm">
+                <mat-form-field appearance="fill" class="me-1 w-50">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput placeholder="Nombre del usuario" required autocomplete="off" formControlName="nombre">
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="ms-1 w-49">
+                    <mat-label>Apellido</mat-label>
+                    <input matInput placeholder="Apellido del usuario" required autocomplete="off" formControlName="apellido">
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="me-1 w-50">
+                    <mat-label>Tipo de documento</mat-label>
+                    <mat-select formControlName="tipoIdentificacion" required [compareWith]="compararTipoDocumento">
+                      <mat-option *ngFor="let tipoDocumento of tiposIdentificaciones" [value]="tipoDocumento">{{tipoDocumento.nombre}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="ms-1 w-49">
+                    <mat-label>Identificacion</mat-label>
+                    <input matInput placeholder="Numero de documento" required autocomplete="off" formControlName="identificacion">
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="w-100">
+                    <mat-label>Usuario</mat-label>
+                    <input matInput placeholder="Ingrese el nombre de usuario" required autocomplete="off" formControlName="username">
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="w-100">
+                    <mat-label>Clave</mat-label>
+                    <input placeholder="Ingrese la clave de acceso" required matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="w-100" *ngIf="authService.hasRole('ROLE_SUPERADMINISTRADOR')">
+                    <mat-label>Empresa</mat-label>
+                    <mat-select formControlName="empresa" required [compareWith]="compararEmpresa">
+                      <mat-option *ngFor="let empresa of empresas" [value]="empresa">{{empresa.nombre}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="input_estado">
+                    <mat-label>Estado</mat-label>
+                    <mat-select formControlName="enabled" required>
+                        <mat-option [value]=true>Activo</mat-option>
+                        <mat-option [value]=false>Inactivo</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="input_rol">
+                    <mat-label>Roles</mat-label>
+                    <mat-select formControlName="roles" multiple [compareWith]="compararRoles">
+                      <mat-option *ngFor="let rol of roles" [value]="rol">{{rol.nombre}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <button class="form_buttom btn btn-primary" [disabled]="usuarioForm.invalid" (click)="create()" 
+                    *ngIf="!usuarioId else elseBlock">
+                    Registrar 
+                </button>
+
+                <button type="button" class="form_buttom btn btn-danger" routerLink="/usuarios">
+                    Cancelar 
+                </button>
+
+                <ng-template #elseBlock>
+                    <button class="form_buttom btn btn-primary" (click)="update()"> Actualizar </button>
+                </ng-template>
+            </form>
+        </div>
+    </div>
+</div>

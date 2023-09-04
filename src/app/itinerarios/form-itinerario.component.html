@@ -1,0 +1,120 @@
+<ul class="alert alert-danger" *ngIf="errores && errores.length > 0">
+    <li class="ms-3" *ngFor="let err of errores">{{ err }}</li>
+</ul>
+<div class="container">
+    <div class="card border-primary mt-3" style="max-width: 30rem;">
+        <div *ngIf="!itinerario.id else elsBlock" class="card-header border-primary"><strong>Registrar Itinerario</strong></div>
+
+        <ng-template #elsBlock>
+            <div class="card-header border-primary"><strong>Editar Itinerario</strong></div>
+        </ng-template>
+        
+        <div class="card-body">
+    
+            <form #itinerarioForm="ngForm">
+    
+                <div class="form-group">
+                    <label for="fechaEmbarque" class="col-form-label col-sm-5">Fecha Embarque</label>
+                    <div class="col-sm-15" style="margin-top: -10px;">
+                        <input matInput [matDatepicker]="myDataPicker" class="form-control border-primary" name="fechaEmbarque" 
+                        [(ngModel)]="itinerario.fechaEmbarque" required autocomplete="off" style="display: inline; width: 395px;">
+                        <mat-datepicker-toggle matIconSuffix [for]="myDataPicker"></mat-datepicker-toggle>
+                        <mat-datepicker #myDataPicker></mat-datepicker>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="horaSalida" class="col-form-label col-sm-5">Hora Salida</label>
+                    <div class="col-sm-15">
+                        <input 
+                            type="time" class="form-control border-primary" autocomplete="off" name="horaSalida" 
+                            placeholder="Ingrese la hora de salida" [(ngModel)]="itinerario.horaSalida" 
+                            required
+                        >
+                    </div>
+                    
+                </div>
+
+                <div class="form-group">
+                    <label for="horaRegreso" class="col-form-label col-sm-5">Hora Regreso</label>
+                    <div class="col-sm-15">
+                        <input 
+                            type="time" class="form-control border-primary" autocomplete="off" name="horaRegreso" 
+                            placeholder="Ingrese la hora de regreso" [(ngModel)]="itinerario.horaRegreso" 
+                            required
+                        >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="precio" class="col-form-label col-sm-5">Precio</label>
+                    <div class="col-sm-15">
+                        <input 
+                            type="number" class="form-control border-primary" autocomplete="off" name="precio" 
+                            placeholder="Ingrese el precio del itinerario" [(ngModel)]="itinerario.precio" 
+                            required
+                        >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-form-label col-sm-5">Embarcacion</label>
+                    <div class="col-sm-15">
+                        <select class="form-select border-primary" aria-label="Default select example" name="embarcacion" 
+                        [(ngModel)]="itinerario.embarcacion" required [compareWith]="compararEmbarcacion">
+                            <option [ngValue]="undefined">Seleccionar embarcacion</option>
+                            <option *ngFor="let embarcacion of embarcaciones" [ngValue]="embarcacion">{{embarcacion.nombre}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-form-label col-sm-5">Destino</label>
+                    <div class="col-sm-15">
+                        <select class="form-select border-primary" aria-label="Default select example" name="destino" 
+                        [(ngModel)]="itinerario.destino" required [compareWith]="compararDestino">
+                            <option [ngValue]="undefined">Seleccionar destino</option>
+                            <option *ngFor="let destino of destinos" [ngValue]="destino">{{destino.nombre}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-form-label col-sm-5">Muelle</label>
+                    <div class="col-sm-15">
+                        <select class="form-select border-primary" aria-label="Default select example" name="muelle" 
+                        [(ngModel)]="itinerario.muelle" required [compareWith]="compararMuelle">
+                            <option [ngValue]="undefined">Seleccionar muelle</option>
+                            <option *ngFor="let muelle of muelles" [ngValue]="muelle">{{muelle.nombre}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row row-cols-2">
+                        <div class="col">
+                            <button 
+                                class="btn btn-primary mt-3 w-100" role="button" (click)="create()" 
+                                *ngIf="!itinerario.id else elseBlock" [disabled]="!itinerarioForm.valid">
+                                Registrar
+                            </button>
+
+                            <ng-template #elseBlock>
+                                <button 
+                                    class="btn btn-primary mt-3 w-100" role="button" (click)="update()" [disabled]="!itinerarioForm.valid">
+                                    Actualizar
+                                </button>
+                            </ng-template>
+                        </div>
+
+                        <div class="col">
+                            <button type="button" class="btn btn-danger mt-3 w-100" routerLink="/itinerarios">
+                                Cancelar 
+                            </button>
+                        </div>
+                    </div>        
+                </div>
+            </form>          
+        </div>
+    </div>
+</div>

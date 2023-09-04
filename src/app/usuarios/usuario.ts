@@ -12,5 +12,5 @@ export class Usuario {
     password!: string;
     enabled!: boolean;
     empresa!: Empresa;
-    roles: Array<Rol> = [];
+    roles!: Rol[];
 }

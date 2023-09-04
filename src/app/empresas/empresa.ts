@@ -8,7 +8,7 @@ export class Empresa {
     email!: string;
     telefono!: string;
     imagen!: string;
-    enabled : boolean = true;
+    enabled! : boolean;
     usuarios: Array<Usuario> = [];
     embarcaciones: Array<Embarcacion> = [];
 }

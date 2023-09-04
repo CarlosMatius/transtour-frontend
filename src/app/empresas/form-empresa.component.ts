@@ -6,12 +6,11 @@ import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-form',
-  templateUrl: './form.component.html'
+  templateUrl: './form-empresa.component.html'
 })
-export class FormComponent implements OnInit{
+export class FormEmpresaComponent implements OnInit{
 
   public empresa: Empresa = new Empresa();
-  public titulo: string = "Registrar Empresa";
   public errores!: string[];
 
   constructor(

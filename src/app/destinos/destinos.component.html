@@ -1,1 +1,45 @@
-<p>destinos works!</p>
+<div class="container">
+    <div class="card border-danger" style="max-width: 40rem;">
+      <div class="card-header">{{titulo}}</div>
+      <div class="card-body text-dark">
+        <h5 class="card-title fs-4 text-center">Listado de Destinos</h5>
+  
+        <div class="my-2 text-left">
+          <button class="btn btn rounded btn-primary" type="button" [routerLink]="['/destinos/form']">Nuevo Destino</button>
+        </div>
+        <div *ngIf="destinos?.length===0" class="alert alert-info">
+          No hay destinos registrados
+        </div>
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped table-hover text-left" *ngIf="destinos != null && destinos.length > 0">
+            <thead>
+                <tr>
+                  <th class="w-100 text-center">Nombre</th>
+                  <th>Estado</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let destino of destinos">
+                <td class="align-middle">{{destino.nombre | uppercase}}</td>
+                <td class="align-middle">{{destino.enabled ? 'Activo' : 'Inactivo'}}</td>
+                <td class="align-middle">
+                  <button type="button" name="editar" [routerLink]="['/destinos/form', destino.id]"
+                  class="btn btn-primary btn-sm">
+                    Editar
+                  </button>
+                </td>
+                <td class="align-middle">
+                  <button  type="button" name="eliminar" (click)="delete(destino)" class="btn btn-danger btn-sm">
+                        Eliminar
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <paginator-nav *ngIf="paginador && paginador.totalPages > 1" [paginador]="paginador" [enlacePaginador]="enlacePaginador" [sizePagina]="sizePagina"></paginator-nav>
+      </div>
+    </div>
+  </div>
