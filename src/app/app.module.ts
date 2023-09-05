@@ -22,6 +22,11 @@ import { FormEmpresaComponent } from './empresas/form-empresa.component';
 import { FormItinerarioComponent } from './itinerarios/form-itinerario.component';
 import { IndexComponent } from './index/index.component';
 import { PerfilComponent } from './perfil/perfil.component';
+import { LoginComponent } from './usuarios/login/login.component';
+import { authGuard } from './usuarios/guards/auth.guard';
+import { roleGuard } from './usuarios/guards/role.guard';
+import { TokenInterceptor } from './usuarios/interceptors/token.interceptor';
+import { AuthInterceptor } from './usuarios/interceptors/auth.interceptor';
 
 import { RouterModule, Routes } from '@angular/router';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -38,19 +43,16 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatMomentDateModule} from '@angular/material-moment-adapter';
-import { LoginComponent } from './usuarios/login/login.component';
-import { authGuard } from './usuarios/guards/auth.guard';
-import { roleGuard } from './usuarios/guards/role.guard';
-import { TokenInterceptor } from './usuarios/interceptors/token.interceptor';
-import { AuthInterceptor } from './usuarios/interceptors/auth.interceptor';
+import { ResultadoComponent } from './itinerarios/resultado/resultado.component';
 
 registerLocaleData(localeES, 'es');
 
 const routes: Routes = [
 
   {path: '', redirectTo: '/index', pathMatch: 'full'},
-
   {path: 'index', component: IndexComponent},
+  {path: 'resultado', component: ResultadoComponent},
+  {path: 'perfil', component: PerfilComponent, canActivate:[authGuard, roleGuard], data: { role:['ROLE_SUPERADMINISTRADOR', 'ROLE_ADMINISTRADOR', 'ROLE_ASESOR']}},
   
   {path: 'usuarios', component: UsuariosComponent, canActivate:[authGuard, roleGuard], data: { role:['ROLE_SUPERADMINISTRADOR', 'ROLE_ADMINISTRADOR']}},
   {path: 'usuarios/form', component: FormUsuarioComponent, canActivate:[authGuard, roleGuard], data: { role:['ROLE_SUPERADMINISTRADOR', 'ROLE_ADMINISTRADOR']}},
@@ -76,9 +78,6 @@ const routes: Routes = [
   {path: 'itinerarios/form', component: FormItinerarioComponent, canActivate:[authGuard, roleGuard], data: { role:['ROLE_SUPERADMINISTRADOR', 'ROLE_ADMINISTRADOR']}},
   {path: 'itinerarios/form/:id', component: FormItinerarioComponent, canActivate:[authGuard, roleGuard], data: { role:['ROLE_SUPERADMINISTRADOR', 'ROLE_ADMINISTRADOR']}},
   {path: 'itinerarios/page/:page', component: ItinerariosComponent, canActivate:[authGuard, roleGuard], data: { role:['ROLE_SUPERADMINISTRADOR', 'ROLE_ADMINISTRADOR', 'ROLE_ASESOR']}},
-
-  {path: 'perfil', component: PerfilComponent, canActivate:[authGuard, roleGuard], data: { role:['ROLE_SUPERADMINISTRADOR', 'ROLE_ADMINISTRADOR', 'ROLE_ASESOR']}},
-
   
   
   
@@ -110,7 +109,8 @@ const routes: Routes = [
     FormItinerarioComponent,
     LoginComponent,
     IndexComponent,
-    PerfilComponent
+    PerfilComponent,
+    ResultadoComponent
   ],
   imports: [
     BrowserModule,

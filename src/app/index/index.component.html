@@ -1,1 +1,42 @@
-<p>esta seria la pagina principal</p>
+<div class="container">
+    <div class="card border-primary mt-5" style="max-width: 20rem; margin-left: 0;">
+        <div class="card-header border-primary"><strong style="color: blue;">Planes y servicios</strong></div>
+
+        <div class="card-body">
+    
+            <form #itinerariosForm="ngForm">
+    
+                <div class="form-group">
+                    <label for="nombreDestino" class="col-form-label col-sm-3"><strong style="color: red; font-size: 16px;">Destino</strong></label>
+                    <div class="col-sm-15 mb-2">
+                        <select class="form-select border-primary" aria-label="Default select example" name="nombreDestino" 
+                        [(ngModel)]="nombreDestino" required>
+                            <option [ngValue]="undefined">Seleccionar destino</option>
+                            <option *ngFor="let destino of destinos" [ngValue]="destino.nombre">{{destino.nombre | uppercase}}</option>
+                        </select>
+                    </div>
+                </div>
+    
+                <div class="form-group">
+                    <label for="fechaEmbarque" class="col-form-label col-sm-3"><strong style="color: red;font-size: 16px;">Fecha</strong></label>
+                    <div class="col-sm-15" style="margin-top: -10px;">
+                        <input matInput [matDatepicker]="myDataPicker" placeholder="Elige una Fecha" class="form-control border-primary" name="fechaEmbarque" 
+                        [(ngModel)]="fechaEmbarque" required autocomplete="off" style="display: inline; width: 230px;">
+                        <mat-datepicker-toggle matIconSuffix [for]="myDataPicker"></mat-datepicker-toggle>
+                        <mat-datepicker #myDataPicker></mat-datepicker>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <div class="row row-cols-2">
+                        <div class="col mx-auto">
+                            <button  class="btn btn-danger mt-3 w-100" role="button" (click)="consultar()" [disabled]="!itinerariosForm.valid">
+                                Buscar
+                            </button>
+                        </div>
+                    </div>        
+                </div>
+            </form>          
+        </div>
+    </div>
+</div>

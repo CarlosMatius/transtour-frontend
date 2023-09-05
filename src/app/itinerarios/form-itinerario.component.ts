@@ -49,6 +49,7 @@ export class FormItinerarioComponent implements OnInit{
   }
 
   create(): void {
+    console.log('datos ' + this.itinerario.fechaEmbarque);
     this.itinerarioService.create(this.itinerario).subscribe({
       next: () => {
         this.router.navigate(['/itinerarios'])

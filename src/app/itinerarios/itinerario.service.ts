@@ -49,6 +49,14 @@ export class ItinerarioService {
     );
   }
 
+  consultarItinerarios(fechaEmbarque: string, nombreDestino: string): Observable<Itinerario[]> {
+    return this.http.get<Itinerario[]>(`${this.urlEndPoint}/${fechaEmbarque}/${nombreDestino}`).pipe(
+      catchError(e => {
+        return throwError(() => e);
+      })
+    );
+  }
+
   update(itinerario: Itinerario): Observable<Itinerario> {
     return this.http.put(`${this.urlEndPoint}/${itinerario.id}`, itinerario).pipe(
       map((response: any) => response.itinerario as Itinerario),

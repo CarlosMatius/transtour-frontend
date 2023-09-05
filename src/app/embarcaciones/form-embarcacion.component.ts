@@ -51,7 +51,7 @@ export class FormEmbarcacionComponent implements OnInit{
       error: (err) => {
         this.errores = err.error.error as string[];
       }
-  });
+    });
   }
 
   update(): void {

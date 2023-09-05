@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Reserva } from './reserva';
 
 @Component({
   selector: 'app-reservas',
@@ -6,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./reservas.component.css']
 })
 export class ReservasComponent {
-
+  reservas!: Reserva[];
+  titulo: string = "Reserva";
 }

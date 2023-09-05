@@ -1,1 +1,36 @@
-<p>reservas works!</p>
+<div class="container">
+    <div class="card border-danger">
+      <div class="card-header">{{titulo}}</div>
+      <div class="card-body text-dark">
+        <h5 class="card-title fs-4 text-center">Listado de Reservas</h5>
+  
+        <div class="my-2 text-left">
+          <button class="btn btn rounded btn-primary" type="button" [routerLink]="['/reserva/form']">Nueva Reserva</button>
+        </div>
+        <div *ngIf="reservas?.length===0" class="alert alert-info">
+          No hay reservas registradas
+        </div>
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped table-hover text-center" *ngIf="reservas != null && reservas.length > 0">
+            <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Codigo</th>
+                  <th>Destino</th>
+                  <th>Empresa</th>
+                  <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let reserva of reservas">
+                <td>{{reserva.createdAt}}</td>
+                <td>{{reserva.codigoReserva}}</td>
+                <td>{{reserva.itinerario.destino.nombre | uppercase}}</td>
+                <td>{{reserva.total | currency:'COP':'symbol':'1.0-0'}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
