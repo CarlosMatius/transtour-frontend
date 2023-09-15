@@ -3,6 +3,7 @@ import { Embarcacion } from './embarcacion';
 import { EmbarcacionService } from './embarcacion.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { AuthService } from '../usuarios/login/auth.service';
 
 @Component({
   selector: 'app-embarcaciones',
@@ -20,6 +21,7 @@ export class EmbarcacionesComponent implements OnInit{
     private embarcacionService: EmbarcacionService, 
     private activatedRoute: ActivatedRoute,
     private router: Router,
+    public authService: AuthService
   ){}
 
   ngOnInit(): void {

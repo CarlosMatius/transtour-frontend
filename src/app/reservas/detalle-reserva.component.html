@@ -1,0 +1,53 @@
+<div class="card bg-light" *ngIf="reserva">
+    <div class="card-header">{{titulo}}: Fecha creada: {{reserva.createdAt | date:'yyyy-MM-dd'}}</div>
+    <div class="card-body">
+        <h4 class="card-title">
+            <a [routerLink]="['/reservas']" class="btn btn-light btn-xs">&laquo; volver</a>
+        </h4>
+
+        <ul class="list-group my-2">
+            <li class="list-group-item list-group-item-primary">Datos de la Reserva</li>
+            <li class="list-group-item">Codigo: {{reserva.codigoReserva}}</li>
+            <li class="list-group-item">Fecha: {{reserva.itinerario.fechaEmbarque}}</li>
+            <li class="list-group-item">Destino: {{reserva.itinerario.destino.nombre | uppercase}}</li>
+            <li class="list-group-item">Hora Salidad: {{reserva.itinerario.horaSalida}}</li>
+            <li class="list-group-item">Hora Regreso: {{reserva.itinerario.horaRegreso}}</li>
+            <li class="list-group-item">Total: {{reserva.total}}</li>
+        </ul>
+
+        <ul class="list-group my-2">
+            <li class="list-group-item list-group-item-primary">Información de Contacto</li>
+            <li class="list-group-item">Nombre: {{reserva.responsableReserva.nombre | uppercase}}</li>
+            <li class="list-group-item">Apellido: {{reserva.responsableReserva.apellido | uppercase}}</li>
+            <li class="list-group-item">Email: {{reserva.responsableReserva.email}}</li>
+            <li class="list-group-item">Telefono: {{reserva.responsableReserva.telefono}}</li>
+        </ul>
+
+        <ul class="list-group my-2">
+            <li class="list-group-item list-group-item-primary">Pasajeros</li>
+        </ul>
+
+        <table class="table table-bordered table-striped table-hover text-center" *ngIf="reserva.pasajeros != null && reserva.pasajeros.length > 0">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Tipo Documento</th>
+                    <th>Documento</th>
+                </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let pasajero of reserva.pasajeros">
+                <td class="align-middle">{{pasajero.nombre | uppercase}}</td>
+                <td class="align-middle">{{pasajero.apellido | uppercase}}</td>
+                <td class="align-middle">{{pasajero.tipoIdentificacion.nombre}}</td>
+                <td class="align-middle">{{pasajero.identificacion}}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h5 class="float-right">
+            <span>Total</span>: <span class="bg bg-secondary">{{reserva.total}}</span>
+          </h5>
+    </div>
+</div>

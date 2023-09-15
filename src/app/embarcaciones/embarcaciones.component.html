@@ -17,18 +17,18 @@
                   <th>Nombre</th>
                   <th>Capacidad</th>
                   <th>Estado</th>
-                  <th>Empresa</th>
+                  <th *ngIf="authService.hasRole('ROLE_SUPERADMINISTRADOR')">Empresa</th>
                   <th></th>
                   <th></th>
                 </tr>
             </thead>
             <tbody>
               <tr *ngFor="let embarcacion of embarcaciones">
-                <td>{{embarcacion.nombre | uppercase}}</td>
-                <td>{{embarcacion.capacidad}}</td>
-                <td>{{embarcacion.enabled ? 'Activa' : 'Inactiva'}}</td>
-                <td>{{embarcacion.empresa.nombre | uppercase}}</td>
-                <td>
+                <td class="align-middle">{{embarcacion.nombre | uppercase}}</td>
+                <td class="align-middle">{{embarcacion.capacidad}}</td>
+                <td class="align-middle">{{embarcacion.enabled ? 'Activa' : 'Inactiva'}}</td>
+                <td *ngIf="authService.hasRole('ROLE_SUPERADMINISTRADOR')" class="align-middle">{{embarcacion.empresa.nombre | uppercase}}</td>
+                <td class="align-middle">
                   <button type="button" name="editar" [routerLink]="['/embarcaciones/form', embarcacion.id]"
                   class="btn btn-primary btn-sm">
                     Editar

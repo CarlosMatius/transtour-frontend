@@ -1,4 +1,5 @@
-<div class="container">
+<mat-spinner *ngIf="loading" style="margin: 290px auto;"></mat-spinner>
+<div class="container" *ngIf="!loading">
     <div class="card border-primary mt-5" style="max-width: 20rem; margin-left: 0;">
         <div class="card-header border-primary"><strong style="color: blue;">Planes y servicios</strong></div>
 

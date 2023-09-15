@@ -24,14 +24,26 @@ export class DetalleComponent implements OnInit{
     this.fotoSeleccionada = event.target.files[0];
     this.progreso = 0;
     if(this.fotoSeleccionada.type.indexOf('image') < 0) {
-      Swal.fire('Error seleccionar imagen', 'el archivo debe ser del tipo imagen', 'error');
+      Swal.fire({
+        title: 'Error seleccionar imagen',
+        text: 'el archivo debe ser del tipo imagen',
+        icon: 'error',
+        timer: 2000,
+        showConfirmButton: false
+      });
       this.fotoSeleccionada = new File([], '');
     }
   }
 
   subirFoto():void {
     if(!this.fotoSeleccionada) {
-      Swal.fire('Error Upload', 'debe seleccionar una imagen', 'error')
+      Swal.fire({
+        title: 'Error Upload',
+        text: 'debe seleccionar una imagen',
+        icon: 'error',
+        timer: 2000,
+        showConfirmButton: false
+      });
     }
     else {
       this.empresaService.subirFoto(this.fotoSeleccionada, this.empresa.id).subscribe(
@@ -43,7 +55,13 @@ export class DetalleComponent implements OnInit{
             let response: any = event.body;
             this.empresa = response.empresa as Empresa;
             this.modalService.notificarUpload.emit(this.empresa);
-            Swal.fire('La imagen se ha subido completamente', response.message, 'success');
+            Swal.fire({
+              title: 'La imagen se ha subido completamente',
+              text:  response.message,
+              icon: 'success',
+              timer: 2000,
+              showConfirmButton: false
+            });
           }
         }
       );

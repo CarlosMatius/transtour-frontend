@@ -3,6 +3,7 @@ import { Usuario } from './usuario';
 import { UsuarioService } from './usuario.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { AuthService } from './login/auth.service';
 
 @Component({
   selector: 'app-usuarios',
@@ -19,7 +20,8 @@ export class UsuariosComponent implements OnInit{
   constructor(
     private usuarioService: UsuarioService, 
     private activatedRoute: ActivatedRoute,
-    private router: Router){}
+    private router: Router,
+    public authService: AuthService){}
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(

@@ -53,7 +53,13 @@ export class FormItinerarioComponent implements OnInit{
     this.itinerarioService.create(this.itinerario).subscribe({
       next: () => {
         this.router.navigate(['/itinerarios'])
-        Swal.fire('Nuevo itinerario', `El itinerario ha sido registrado con exito!`, 'success')
+        Swal.fire({
+          title: 'Nuevo itinerario',
+          text: 'El itinerario ha sido registrado con exito!',
+          icon: 'success',
+          timer: 2000,
+          showConfirmButton: false
+        });
       },
       error: (err) => {
         this.errores = err.error.error as string[];
@@ -65,7 +71,13 @@ export class FormItinerarioComponent implements OnInit{
     this.itinerarioService.update(this.itinerario).subscribe({
       next: () => {
         this.router.navigate(['/itinerarios'])
-        Swal.fire('itinerario actualizado', `Itinerario actualizado con exito!`, 'success')
+        Swal.fire({
+          title: 'itinerario actualizado',
+          text: 'Itinerario actualizado con exito!',
+          icon: 'success',
+          timer: 2000,
+          showConfirmButton: false
+        });
       },
       error: (err) => {
         this.errores = err.error.errors as string[];

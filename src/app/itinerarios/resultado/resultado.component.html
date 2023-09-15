@@ -1,40 +1,38 @@
 <div class="container">
-    <div class="card border-danger mt-4" *ngIf="itinerarios != null && itinerarios.length > 0">
-      <div class="card-header" style="font-size: 20px;">Ofertas</div>
-      <div class="card-body text-dark">
-        <h5 class="card-title fs-4 text-center" style="color: red;">Resultado Busqueda</h5>
-  
-        <div class="table-responsive">
-          <table class="table table-bordered table-striped table-hover text-center">
-            <thead>
-                <tr>
-                    <th>Agencia</th>
-                    <th>Fecha Embarque</th>
-                    <th>Hora Salida</th>
-                    <th>Hora Regreso</th>
-                    <th>Destino</th>
-                    <th>Precio</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let itinerario of itinerarios">
-                <td>{{itinerario.embarcacion.empresa.nombre | uppercase}}</td>
-                <td>{{itinerario.fechaEmbarque}}</td>
-                <td>{{itinerario.horaSalida}}</td>
-                <td>{{itinerario.horaRegreso}}</td>
-                <td>{{itinerario.destino.nombre | uppercase}}</td>
-                <td>{{itinerario.precio | currency:'COP':'symbol':'1.0-0'}}</td>
-                <td>
-                  <button type="button" name="editar" [routerLink]="['/itinerario/form', itinerario]"
-                  class="btn btn-primary btn-sm">
-                    Seleccionar
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+  <div class="card border-danger mt-4" *ngIf="itinerarios != null && itinerarios.length > 0">
+    <div class="card-header" style="font-size: 20px;">Ofertas</div>
+    <div class="card-body text-dark">
+      <h5 class="card-title fs-4 text-center" style="color: red;">Resultado Busqueda</h5>
+
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover text-center">
+          <thead>
+            <tr>
+              <th>Agencia</th>
+              <th>Fecha Embarque</th>
+              <th>Hora Salida</th>
+              <th>Hora Regreso</th>
+              <th>Destino</th>
+              <th>Precio</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let itinerario of itinerarios">
+              <td>{{itinerario.embarcacion.empresa.nombre | uppercase}}</td>
+              <td>{{itinerario.fechaEmbarque}}</td>
+              <td>{{itinerario.horaSalida}}</td>
+              <td>{{itinerario.horaRegreso}}</td>
+              <td>{{itinerario.destino.nombre | uppercase}}</td>
+              <td>{{itinerario.precio | currency:'COP':'symbol':'1.0-0'}}</td>
+              <td>
+                <button type="button" class="btn btn-primary btn-sm"
+                  [routerLink]="['/reservas/form', itinerario.id]">Seleccionar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
+</div>

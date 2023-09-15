@@ -15,7 +15,13 @@ export class HeaderComponent {
     logout(): void {
         let username = this.authService.usuario.username;
         this.authService.logout();
-        Swal.fire('Logout', `Hola ${username} has cerrado sesion con exito!`, 'success');
+        Swal.fire({
+            title: 'Logout',
+            text: `Hola ${username} has cerrado sesion con exito!`,
+            icon: 'success',
+            timer: 2000,
+            showConfirmButton: false
+        });
         this.router.navigate(['/index'])
     }
 }

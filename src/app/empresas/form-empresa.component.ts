@@ -35,7 +35,13 @@ export class FormEmpresaComponent implements OnInit{
     this.empresaService.create(this.empresa).subscribe({
       next: (empresa) => {
         this.router.navigate(['/empresas'])
-        Swal.fire('Nueva empresa', `La empresa ${empresa.nombre} ha sido registrada con exito!`, 'success')
+        Swal.fire({
+          title: 'Nueva empresa',
+          text: `La empresa ${empresa.nombre} ha sido registrada con exito!`,
+          icon: 'success',
+          timer: 2000,
+          showConfirmButton: false
+        });
       },
       error: (err) => {
         this.errores = err.error.error as string[];
@@ -47,7 +53,13 @@ export class FormEmpresaComponent implements OnInit{
     this.empresaService.update(this.empresa).subscribe({
       next: (empresa) => {
         this.router.navigate(['/empresas'])
-        Swal.fire('Empresa actualizada', `Empresa ${empresa.nombre} actualizada con exito!`, 'success')
+        Swal.fire({
+          title: 'Empresa actualizada',
+          text: `Empresa ${empresa.nombre} actualizada con exito!`,
+          icon: 'success',
+          timer: 2000,
+          showConfirmButton: false
+        });
       },
       error: (err) => {
         this.errores = err.error.errors as string[];

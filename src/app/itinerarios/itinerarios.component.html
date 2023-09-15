@@ -14,36 +14,43 @@
           <table class="table table-bordered table-striped table-hover text-center" *ngIf="itinerarios != null && itinerarios.length > 0">
             <thead>
                 <tr>
+                  <th *ngIf="authService.hasRole('ROLE_SUPERADMINISTRADOR')">Agencia</th>
                   <th>Fecha</th>
-                  <th>Salidad</th>
-                  <th>Regreso</th>
+                  <th>Hora Salidad</th>
+                  <th>Hora Regreso</th>
                   <th>Cupos</th>
                   <th>Precio</th>
                   <th>Embarcacion</th>
                   <th>Destinos</th>
                   <th>Muelle</th>
+                  <th *ngIf="authService.hasRole('ROLE_SUPERADMINISTRADOR') || authService.hasRole('ROLE_ADMINISTRADOR') || authService.hasRole('ROLE_ASESOR')"></th>
                   <th *ngIf="authService.hasRole('ROLE_SUPERADMINISTRADOR') || authService.hasRole('ROLE_ADMINISTRADOR')"></th>
                   <th *ngIf="authService.hasRole('ROLE_SUPERADMINISTRADOR') || authService.hasRole('ROLE_ADMINISTRADOR')"></th>
                 </tr>
             </thead>
             <tbody>
               <tr *ngFor="let itinerario of itinerarios">
-                <td>{{itinerario.fechaEmbarque}}</td>
-                <td>{{itinerario.horaSalida}}</td>
-                <td>{{itinerario.horaRegreso}}</td>
-                <td>{{itinerario.cupos}}</td>
-                <td>{{itinerario.precio | currency}}</td>
-                <td>{{itinerario.embarcacion.nombre}}</td>
-                <td>{{itinerario.destino.nombre}}</td>
-                <td>{{itinerario.muelle.nombre}}</td>
-                <td *ngIf="authService.hasRole('ROLE_SUPERADMINISTRADOR') || authService.hasRole('ROLE_ADMINISTRADOR')">
-                  <button type="button" name="editar" [routerLink]="['/itinerarios/form', itinerario.id]"
-                  class="btn btn-primary btn-sm">
+                <td *ngIf="authService.hasRole('ROLE_SUPERADMINISTRADOR')" class="align-middle">{{itinerario.embarcacion.empresa.nombre | uppercase}}</td>
+                <td class="align-middle">{{itinerario.fechaEmbarque}}</td>
+                <td class="align-middle">{{itinerario.horaSalida}}</td>
+                <td class="align-middle">{{itinerario.horaRegreso}}</td>
+                <td class="align-middle">{{itinerario.cupos}}</td>
+                <td class="align-middle">{{itinerario.precio | currency:'COP':'symbol':'1.0-0'}}</td>
+                <td class="align-middle">{{itinerario.embarcacion.nombre}}</td>
+                <td class="align-middle">{{itinerario.destino.nombre}}</td>
+                <td class="align-middle">{{itinerario.muelle.nombre}}</td>
+                <td class="align-middle" *ngIf="authService.hasRole('ROLE_SUPERADMINISTRADOR') || authService.hasRole('ROLE_ADMINISTRADOR')">
+                  <button type="button" class="btn btn-success btn-sm" [routerLink]="['/reservas/form', itinerario.id]">
+                    Reservar
+                  </button>
+                </td>
+                <td class="align-middle" *ngIf="authService.hasRole('ROLE_SUPERADMINISTRADOR') || authService.hasRole('ROLE_ADMINISTRADOR')">
+                  <button type="button" [routerLink]="['/itinerarios/form', itinerario.id]" class="btn btn-primary btn-sm">
                     Editar
                   </button>
                 </td>
-                <td *ngIf="authService.hasRole('ROLE_SUPERADMINISTRADOR') || authService.hasRole('ROLE_ADMINISTRADOR')" class="align-middle">
-                  <button  type="button" name="eliminar" (click)="delete(itinerario)" class="btn btn-danger btn-sm">
+                <td class="align-middle" *ngIf="authService.hasRole('ROLE_SUPERADMINISTRADOR') || authService.hasRole('ROLE_ADMINISTRADOR')" class="align-middle">
+                  <button  type="button" (click)="delete(itinerario)" class="btn btn-danger btn-sm">
                     Eliminar
                   </button>
                 </td>

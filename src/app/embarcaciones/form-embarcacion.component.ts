@@ -46,7 +46,13 @@ export class FormEmbarcacionComponent implements OnInit{
     this.embarcacionService.create(this.embarcacion).subscribe({
       next: (embarcacion) => {
         this.router.navigate(['/embarcaciones'])
-        Swal.fire('Nueva embarcacion', `La embarcacion ${embarcacion.nombre} ha sido registrada con exito!`, 'success')
+        Swal.fire({
+          title: 'Nueva embarcacion',
+          text: `La embarcacion ${embarcacion.nombre} ha sido registrada con exito!`,
+          icon: 'success',
+          timer: 2000,
+          showConfirmButton: false
+        });
       },
       error: (err) => {
         this.errores = err.error.error as string[];
@@ -58,7 +64,13 @@ export class FormEmbarcacionComponent implements OnInit{
     this.embarcacionService.update(this.embarcacion).subscribe({
       next: (embarcacion) => {
         this.router.navigate(['/embarcaciones'])
-        Swal.fire('Embarcacion actualizada', `Embarcacion ${embarcacion.nombre} actualizada con exito!`, 'success')
+        Swal.fire({
+          title: 'Embarcacion actualizada',
+          text: `Embarcacion ${embarcacion.nombre} actualizada con exito!`,
+          icon: 'success',
+          timer: 2000,
+          showConfirmButton: false
+        });
       },
       error: (err) => {
         this.errores = err.error.errors as string[];

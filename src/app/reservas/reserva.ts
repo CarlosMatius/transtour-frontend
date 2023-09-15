@@ -11,5 +11,6 @@ export class Reserva {
     itinerario!: Itinerario;
     responsableReserva!: ResponsableReserva;
     pago!: Pago;
-    pasajeros: Array<Pasajero> = [];
+    pasajeros!: Pasajero[];
+
 }

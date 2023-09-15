@@ -1,17 +1,15 @@
-import { Component} from '@angular/core';
-import { ActivatedRoute} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { Itinerario } from '../itinerario';
 
 @Component({
   selector: 'app-resultado',
-  templateUrl: './resultado.component.html',
-  styleUrls: ['./resultado.component.css']
+  templateUrl: './resultado.component.html'
 })
-export class ResultadoComponent{
-  
+export class ResultadoComponent {
+
   public itinerarios!: Itinerario[];
 
-  constructor(private route: ActivatedRoute) {
+  constructor() {
     const navigationState = window.history.state;
     if (navigationState && navigationState.data) {
       this.itinerarios = navigationState.data;

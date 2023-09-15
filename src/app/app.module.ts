@@ -27,6 +27,9 @@ import { authGuard } from './usuarios/guards/auth.guard';
 import { roleGuard } from './usuarios/guards/role.guard';
 import { TokenInterceptor } from './usuarios/interceptors/token.interceptor';
 import { AuthInterceptor } from './usuarios/interceptors/auth.interceptor';
+import { ResultadoComponent } from './itinerarios/resultado/resultado.component';
+import { DetalleReservaComponent } from './reservas/detalle-reserva.component';
+import { FormReservaComponent } from './reservas/form-reserva.component';
 
 import { RouterModule, Routes } from '@angular/router';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -43,7 +46,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatMomentDateModule} from '@angular/material-moment-adapter';
-import { ResultadoComponent } from './itinerarios/resultado/resultado.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 registerLocaleData(localeES, 'es');
 
@@ -79,10 +82,13 @@ const routes: Routes = [
   {path: 'itinerarios/form/:id', component: FormItinerarioComponent, canActivate:[authGuard, roleGuard], data: { role:['ROLE_SUPERADMINISTRADOR', 'ROLE_ADMINISTRADOR']}},
   {path: 'itinerarios/page/:page', component: ItinerariosComponent, canActivate:[authGuard, roleGuard], data: { role:['ROLE_SUPERADMINISTRADOR', 'ROLE_ADMINISTRADOR', 'ROLE_ASESOR']}},
   
+  {path: 'reservas', component: ReservasComponent, canActivate:[authGuard, roleGuard], data: { role:['ROLE_SUPERADMINISTRADOR', 'ROLE_ADMINISTRADOR', 'ROLE_ASESOR']}},
+  {path: 'reservas/page/:page', component: ReservasComponent, canActivate:[authGuard, roleGuard], data: { role:['ROLE_SUPERADMINISTRADOR', 'ROLE_ADMINISTRADOR', 'ROLE_ASESOR']}},
+  {path: 'reservas/:id', component: DetalleReservaComponent, canActivate:[authGuard, roleGuard], data: { role:['ROLE_SUPERADMINISTRADOR', 'ROLE_ADMINISTRADOR', 'ROLE_ASESOR']}},
+  {path: 'reservas/form/:itinerarioId', component: FormReservaComponent},
+    
   
   
-  
-  {path: 'reservas', component: ReservasComponent},
   {path: 'pagos', component: PagosComponent}
   
 ]
@@ -110,7 +116,9 @@ const routes: Routes = [
     LoginComponent,
     IndexComponent,
     PerfilComponent,
-    ResultadoComponent
+    ResultadoComponent,
+    DetalleReservaComponent,
+    FormReservaComponent
   ],
   imports: [
     BrowserModule,
@@ -125,7 +133,8 @@ const routes: Routes = [
     MatSelectModule,
     MatButtonModule,
     MatDatepickerModule,
-    MatMomentDateModule
+    MatMomentDateModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     {provide: LOCALE_ID, useValue: 'es'},

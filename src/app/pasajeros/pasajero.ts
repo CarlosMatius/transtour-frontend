@@ -7,5 +7,4 @@ export class Pasajero {
     apellido!: string;
     tipoIdentificacion!: TipoIdentificacion;
     identificacion!: string;
-    reserva!: Reserva;
 }

@@ -19,7 +19,13 @@ export class LoginComponent implements OnInit{
 
   ngOnInit(): void {
     if(this.authService.isAuthenticated()) {
-      Swal.fire('Login', `Hola ${this.authService.usuario.username} ya estas autenticado`, 'info');
+      Swal.fire({
+        title: 'Login',
+        text: `Hola ${this.authService.usuario.username}, ya estás autenticado`,
+        icon: 'info',
+        timer: 2000,
+        showConfirmButton: false
+      });
       this.router.navigate(['/perfil']);
     }
   }
@@ -31,11 +37,23 @@ export class LoginComponent implements OnInit{
         this.authService.guardarToken(response.access_token);
         let usuario = this.authService.usuario;
         this.router.navigate(['/perfil']);
-        Swal.fire('Login', `Hola ${usuario.username}, has iniciado sesion con exito`, 'success');
+        Swal.fire({
+          title: 'Login',
+          text: `Hola ${usuario.username}, has iniciado sesion con exito`,
+          icon: 'success',
+          timer: 2000,
+          showConfirmButton: false
+        });
       },
       error: (err) => {
         if(err.status == 400) {
-          Swal.fire('Error Inicio de Sesion', 'Credenciales de acceso incorrectas', 'error')
+          Swal.fire({
+            title: 'Error Inicio de Sesion',
+            text: 'Credenciales de acceso incorrectas',
+            icon: 'error',
+            timer: 2000,
+            showConfirmButton: false
+          });
         }
       }
     });

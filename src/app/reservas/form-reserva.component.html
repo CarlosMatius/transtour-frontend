@@ -1,0 +1,103 @@
+<ul class="alert alert-danger" *ngIf="errores && errores.length > 0">
+    <li class="ms-3" *ngFor="let err of errores">{{ err }}</li>
+</ul>
+<div class="card border-primary mt-3" style="max-width: 35rem;">
+    <div *ngIf="reserva && reserva.itinerario" class="card-header">
+        <strong>Agencia:</strong> {{reserva.itinerario.embarcacion.empresa.nombre | uppercase}} /
+        <strong>Destino:</strong> {{reserva.itinerario.destino.nombre | uppercase}} /
+        <strong>Fecha:</strong> {{reserva.itinerario.fechaEmbarque}}
+    </div>
+    
+    <div class="card-body">
+        <h5 class="card-tittle" style="margin: -15px;">
+            <a [routerLink]="['/itinerarios']" class="btn btn-xs">&laquo; Volver</a>
+        </h5>
+
+        <h3 class="card-tittle" style="font-size: 20px; text-align: center; color: blue;">
+            Pasajero
+        </h3>
+
+        <form #pasajeroForm="ngForm">
+            <div class="form-group">
+                <div class="col-sm-15">
+                    <input 
+                        type="text" class="form-control border-primary mb-2" autocomplete="off" name="nombre" 
+                        placeholder="Ingrese el nombre del pasajero" [(ngModel)]="pasajero.nombre" 
+                        required
+                    >   
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-15">
+                    <input 
+                        type="text" class="form-control border-primary mb-2" autocomplete="off" name="apellido" 
+                        placeholder="Ingrese el apellido del pasajero" [(ngModel)]="pasajero.apellido" 
+                        required
+                    >   
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-15">
+                    <select class="form-select border-primary mb-2" aria-label="Default select example" name="tipoIdentificacion"
+                    [(ngModel)]="pasajero.tipoIdentificacion" required>
+                        <option [ngValue]="undefined">Seleccionar Tipo Documento</option>
+                        <option *ngFor="let tipoIdentificacion of tiposIdentificaciones" [ngValue]="tipoIdentificacion">
+                            {{tipoIdentificacion.nombre}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-15">
+                    <input 
+                        type="text" class="form-control border-primary" autocomplete="off" name="apellido" 
+                        placeholder="Ingrese el numero de documento" [(ngModel)]="pasajero.identificacion" 
+                        required
+                    >   
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row row-cols-2">
+                    <div class="col">
+                        <button 
+                            class="btn btn-primary mt-2 w-100" role="button" (click)="agregarPasajero()" [disabled]="!pasajeroForm.valid">
+                            Agregar Pasajero
+                        </button>
+                    </div>
+                </div>        
+            </div>
+        </form>
+        
+        <table class="table table-striped table-hover table-sm mt-2">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Tipo Documento</th>
+                    <th>Ientificacion</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let pasjero of reserva.pasajeros">
+                    <td>{{pasajero.nombre}}</td>
+                    <td>{{pasajero.apellido}}</td>
+                    <td>{{pasajero.tipoIdentificacion.nombre}}</td>
+                    <td>{{pasajero.identificacion}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <form #pasajeroForm="ngForm" class="mt-2">
+            <div class="form-group">
+                <div class="row row-cols-2">
+                    <div class="col">
+                        <input type="submit" (click)="create()" value="Crear Reserva" class="btn btn-danger">
+                    </div>
+                </div>        
+            </div>
+        </form>
+    </div>
+</div>
+

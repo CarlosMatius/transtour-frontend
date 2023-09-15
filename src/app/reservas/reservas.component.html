@@ -4,9 +4,6 @@
       <div class="card-body text-dark">
         <h5 class="card-title fs-4 text-center">Listado de Reservas</h5>
   
-        <div class="my-2 text-left">
-          <button class="btn btn rounded btn-primary" type="button" [routerLink]="['/reserva/form']">Nueva Reserva</button>
-        </div>
         <div *ngIf="reservas?.length===0" class="alert alert-info">
           No hay reservas registradas
         </div>
@@ -14,23 +11,40 @@
           <table class="table table-bordered table-striped table-hover text-center" *ngIf="reservas != null && reservas.length > 0">
             <thead>
                 <tr>
-                  <th>Fecha</th>
-                  <th>Codigo</th>
-                  <th>Destino</th>
-                  <th>Empresa</th>
-                  <th>Total</th>
+                    <th *ngIf="authService.hasRole('ROLE_SUPERADMINISTRADOR')">Empresa</th>
+                    <th>Fecha Creada</th>
+                    <th>Codigo</th>
+                    <th>Fecha Embarque</th>
+                    <th>Destino</th>
+                    <th>Total</th>
+                    <th>Detalle</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
               <tr *ngFor="let reserva of reservas">
-                <td>{{reserva.createdAt}}</td>
-                <td>{{reserva.codigoReserva}}</td>
-                <td>{{reserva.itinerario.destino.nombre | uppercase}}</td>
-                <td>{{reserva.total | currency:'COP':'symbol':'1.0-0'}}</td>
+                <td *ngIf="authService.hasRole('ROLE_SUPERADMINISTRADOR')" class="align-middle">{{reserva.itinerario.embarcacion.empresa.nombre | uppercase}}</td>
+                <td class="align-middle">{{reserva.createdAt}}</td>
+                <td class="align-middle">{{reserva.codigoReserva}}</td>
+                <td class="align-middle">{{reserva.itinerario.fechaEmbarque}}</td>
+                <td class="align-middle">{{reserva.itinerario.destino.nombre | uppercase}}</td>
+                <td class="align-middle">{{reserva.total}}</td>
+                <td class="align-middle">
+                  <button type="button" name="editar" [routerLink]="['/reservas', reserva.id]"
+                  class="btn btn-primary btn-sm">
+                    ver
+                  </button>
+                </td>
+                <td class="align-middle">
+                  <button  type="button" name="eliminar" (click)="delete(reserva)" class="btn btn-danger btn-sm">
+                        Eliminar
+                  </button>
+                </td>
               </tr>
             </tbody>
           </table>
         </div>
+        <paginator-nav *ngIf="paginador && paginador.totalPages > 1" [paginador]="paginador" [enlacePaginador]="enlacePaginador" [sizePagina]="sizePagina"></paginator-nav>
       </div>
     </div>
   </div>

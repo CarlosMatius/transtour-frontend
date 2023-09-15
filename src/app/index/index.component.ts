@@ -9,8 +9,7 @@ import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-index',
-  templateUrl: './index.component.html',
-  styleUrls: ['./index.component.css']
+  templateUrl: './index.component.html'
 })
 export class IndexComponent implements OnInit{
 
@@ -18,6 +17,7 @@ export class IndexComponent implements OnInit{
   public nombreDestino!: string;
   public fechaEmbarque!: string;
   public itinerarios!: Itinerario[];
+  loading = false;
 
   constructor(
     private router:Router,
@@ -26,17 +26,33 @@ export class IndexComponent implements OnInit{
 
   ngOnInit(): void {
     this.destinoService.getDestinos().subscribe(destinos => this.destinos = destinos);
+    this.loading=false;
   }
 
   consultar(): void {
     const fechaFormateada = formatDate(this.fechaEmbarque, 'yyyy-MM-dd', 'es-CO');
     this.itinerarioService.consultarItinerarios(fechaFormateada, this.nombreDestino).subscribe({
+
       next: (itinerarios) => {
-        this.itinerarios = itinerarios;
-        this.router.navigate(['/resultado'], { state: { data: this.itinerarios } });
+        this.loading = true;
+        setTimeout(() => {
+          this.itinerarios = itinerarios;
+          this.router.navigate(['/resultado'], { state: { data: this.itinerarios } });
+        }, 1500);
+
       },
       error: (err) => {
-        Swal.fire('', err.error.message, 'error');
+        this.loading = true;
+        setTimeout(() => {
+          Swal.fire({
+            title: '',
+            text: err.error.message,
+            icon: 'error',
+            timer: 2000,
+            showConfirmButton: false
+          });
+          this.loading = false;
+        }, 1500);
       }
     });
   }

@@ -36,7 +36,13 @@ export class FormDestinoComponent implements OnInit{
       this.destinoService.create(this.destino).subscribe({
         next: (destino) => {
           this.router.navigate(['/destinos'])
-          Swal.fire('Nuevo destino', `El destino ${destino.nombre} ha sido registrado con exito!`, 'success')
+          Swal.fire({
+            title: 'Nuevo destino',
+            text: `El destino ${destino.nombre} ha sido registrado con exito!`,
+            icon: 'success',
+            timer: 2000,
+            showConfirmButton: false
+          });
         },
         error: (err) => {
           this.errores = err.error.error as string[];
@@ -48,7 +54,13 @@ export class FormDestinoComponent implements OnInit{
       this.destinoService.update(this.destino).subscribe({
         next: (destino) => {
           this.router.navigate(['/destinos'])
-          Swal.fire('Destino actualizado', `Destino ${destino.nombre} actualizado con exito!`, 'success')
+          Swal.fire({
+            title: 'Destino actualizado',
+            text: `Destino ${destino.nombre} actualizado con exito!`,
+            icon: 'success',
+            timer: 2000,
+            showConfirmButton: false
+          });
         },
         error: (err) => {
           this.errores = err.error.errors as string[];

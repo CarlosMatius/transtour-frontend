@@ -20,7 +20,7 @@
                   <th>Identificacion</th>
                   <th>Usuario</th>
                   <th>Estado</th>
-                  <th>Empresa</th>
+                  <th *ngIf="authService.hasRole('ROLE_SUPERADMINISTRADOR')">Empresa</th>
                   <th>Roles</th>
                   <th></th>
                   <th></th>
@@ -34,7 +34,7 @@
                 <td class="align-middle">{{usuario.identificacion}}</td>
                 <td class="align-middle">{{usuario.username}}</td>
                 <td class="align-middle">{{usuario.enabled ? 'Activo' : 'Inactivo'}}</td>
-                <td class="align-middle">{{usuario.empresa ? usuario.empresa.nombre.toUpperCase() : 'N/A'}}</td>
+                <td *ngIf="authService.hasRole('ROLE_SUPERADMINISTRADOR')" class="align-middle">{{usuario.empresa ? usuario.empresa.nombre.toUpperCase() : 'N/A'}}</td>
                 <td class="align-middle">
                   <ul style="list-style: none; padding: 0; text-align: left;">
                     <li *ngFor="let rol of usuario.roles">

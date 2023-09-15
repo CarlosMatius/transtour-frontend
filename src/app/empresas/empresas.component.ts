@@ -78,7 +78,7 @@ export class EmpresasComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.empresaService.delete(empresa.id).subscribe(
-          response => {
+          () => {
             this.empresas = this.empresas.filter(emp => emp !== empresa)
             this.router.navigate(['/empresas'])
             swalWithBootstrapButtons.fire(

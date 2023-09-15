@@ -25,8 +25,13 @@ export const roleGuard: CanActivateFn = (route, state) => {
   if(hasRole) {
     return true;
   }
-  
-  Swal.fire('Acceso denegado', `Hola ${authService.usuario.username}, no tienes acceso a éste recurso!`, 'warning');
+  Swal.fire({
+    title: 'Acceso denegado',
+    text: `Hola ${authService.usuario.username}, no tienes acceso a éste recurso!`,
+    icon: 'warning',
+    timer: 2000,
+    showConfirmButton: false
+  });
   router.navigate(['/perfil']);
   return false;
 };
